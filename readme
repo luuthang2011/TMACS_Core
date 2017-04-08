@@ -1,0 +1,58 @@
+o   make database
+       use arcmap: system toolboxes - data managerment tools - geodatabase administrator - create enterprise database
+    
+
+-   b1: excel to table (read)
+        - đọc được các loại excel và chuyển mỗi sheet thành 1 file dbf
+            - định dạng đầu ra excelname_format_sheetname.dbf
+            - trả về 2 bảng tên cáu files dbf
+-   b2: nhận dạng các trường không gian lat, long, shapefile -> lyr (excel2xylayer)
+        - lấy 1 spatial reference (.prj)
+-   b3: chuyển layer to geodatabase (arcgis)
+        - khi lưu trên db 1 table 1 record sde_table_registry 1 sde_layers 1 geomatry_columns n columns_registry (và 1 về spatial reference)
+
+
+o	B1: Thiết lập kết nối với GeoDatabase và trích xuất các dữ liệu tạo thành tệp tài liệu (định dạng MXD – ArcMap Document File) gồm:
+    	Dữ liệu không gian (loại điểm, lat, long, ...)
+    	Dữ liệu thông tin khác được định nghĩa trong database (tên, ghi chú, miêu tả, ....)
+    	Dữ liệu về thiết lập kết nối với database (dùng để tự động đồng bộ)
+    	Gồm 3 giai đoạn:
+        •	Kết nối database
+            +   connectSDE.py (sẽ được gọi bởi makeMXDFromSde ko cần chạy)
+        •	Lấy dữ liệu không gian và thông tin thành định dạng LYR (file trung gian)
+        •	Từ 2 dữ liệu trên tạo thành định dạnh MXD
+            +   makeMXDFromSde.py
+                - copy format from empty.mxd -> coding.mxd
+                - clone geodata -> feature.lyr
+                - marge data -> new output topublish.mxd
+
+o	B2: Tạo bản phác thảo của dịch vụ bản đồ tạo thành “draft service definition” (định dạng sddraft)
+    	Đọc các dữ liệu không gian và vẽ ra bản phác thảo của lớp bản đồ
+    	Ở bước này, có thể thay đổi các thông tin của dịch vụ như sử dụng KML hay không, cache tự động hay các mức có trước
+    (ở nguyên cứu này sử dụng tuỳ chọn tắt dịch vụ KML của bản đồ)
+        + ssdraft ex4.py (layer.sddraft là file phác thảo gốc, layerforweb là sau khi disable KML)
+
+o	B3: Kiểm tra, đánh giá bản phác thảo để đánh giá khả năng publish của dịch vụ
+    	Kết quả: các thông báo lỗi (errors, warnings, messages) để chỉnh sửa lại bản phác thảo đủ khả năng publish
+    	Sử dụng: ArcPy-maping, xml.dom
+        + ssdraft ex4.py (ko tạo ra file mà chỉ ra log trên console)
+
+o	B4: Chuyển bản phác thảo thành 1 dịch vụ chính thức, chuẩn bị publish lên máy chủ (dịnh dạng .sd)
+    	Sử dụng: StageService, server
+        + sẽ làm ở upload server.py sau
+
+o	B4.1:  Đưa dịch vụ lên máy chủ
+    	Yêu cầu phát sinh:
+        •	Để có thể đưa dịch vụ lên cần các thông tin kết nối của máy chủ, các thông tin này có thể cần mức độ an toàn nhất định
+    	Biện pháp:
+        •	Xây dựng 1 tập tin mã hoá (định dạng .ags) để lưu trữ thông tin truy cập
+            + tạo file kết nối: createGISServer...py
+            + publish: upload server.py
+
+bug:
+    - filename,sheet tiếng Việt
+    - filename,sheet dấu cách
+    - sheet trống dữ liệu
+    - encode map server connection when delete service
+    - sửa các option khi publish
+    - shape file polygon -> service
