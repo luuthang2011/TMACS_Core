@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# data
+data_processing/
+service_processing/
+
 # Distribution / packaging
 .Python
 env/
@@ -87,3 +91,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+.idea/jsLibraryMappings.xml
+.idea/workspace.xml
+data_processing/rawdata/FIMO_matrix_skill_v2.xlsx
