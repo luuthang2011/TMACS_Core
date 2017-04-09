@@ -56,3 +56,5 @@ bug:
     - encode map server connection when delete service
     - sửa các option khi publish
     - shape file polygon -> service
+    - check connection to geoDB for skip excute
+    - crazy click

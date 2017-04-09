@@ -50,7 +50,8 @@ if __name__ == '__main__':
     mapserver = "118.70.72.13"
     mapserverUser = "siteadmin"
     mapserverPass = "1234"
-    mapserverPort = 6390
+    mapserverPort = '6390'
+    result = []
 
     print 'Input file is', sysInput['excel']
     print 'Output database is', sysInput['database']
@@ -97,9 +98,15 @@ if __name__ == '__main__':
                 makesddraft.analyze()
 
                 publish = upload_server.publish(workspace, service, mapserverconnection)
-                publish.publish()
+                done = publish.publish()
+                # http://118.70.72.13:6390/arcgis/rest/services/its/vn_hp_54d_1/MapServer/0
+                result.append('http://' + mapserver + ':' + mapserverPort + '/arcgis/rest/services/' + done + '/MapServer/0')
     except Exception as err:
         print "!!!!! Something went wrong when TMACS system excited !!!!!"
         print(err.args[0])
 
     print "\n--------------------TMACS's finish!--------------------\n\t POWER BY FIMO CENTER COPYRIGHT", now.year
+    oneline = ''
+    for printer in result:
+        oneline += printer + ';'
+    print oneline

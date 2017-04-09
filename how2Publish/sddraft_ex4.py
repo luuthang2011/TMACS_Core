@@ -60,6 +60,6 @@ class Sddraft:
 
 if __name__ == '__main__':
     print "abc"
-    unitest = Sddraft(r'F:\Code\Arcpy\TMACS\service_processing\mediate', "unitest_01_xlsx_bala2")
+    unitest = Sddraft(r'F:\Code\Arcpy\TMACS\service_processing\mediate', "cayxang_xls_aab")
     unitest.createwithKmlDisable()
     unitest.analyze()
