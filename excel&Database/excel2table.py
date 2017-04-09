@@ -45,7 +45,7 @@ class Excel2table:
 if __name__ == '__main__':
     # in folder ++ "rawdata" || out_table ++ "mediate"
     pool = r'F:\Code\Arcpy\TMACS\data_processing'
-    data = "unitest.xls"
+    data = "cayxang.xls"
 
     unitest = Excel2table(pool, data)
     print unitest.importallsheets()

@@ -1,6 +1,6 @@
 # http://stackoverflow.com/questions/13598958/import-modules-from-different-folders
 
-import sys, arcpy, sys, getopt, datetime
+import arcpy, sys, getopt, datetime
 sys.path.append(r'F:\Code\Arcpy\TMACS\excel&Database')
 sys.path.append(r'F:\Code\Arcpy\TMACS\how2Publish')
 sys.path.append(r'F:\Code\Arcpy\TMACS\hell')
@@ -100,6 +100,7 @@ if __name__ == '__main__':
                 publish = upload_server.publish(workspace, service, mapserverconnection)
                 done = publish.publish()
                 # http://118.70.72.13:6390/arcgis/rest/services/its/vn_hp_54d_1/MapServer/0
+                result.append(done)
                 result.append('http://' + mapserver + ':' + mapserverPort + '/arcgis/rest/services/' + done + '/MapServer/0')
     except Exception as err:
         print "!!!!! Something went wrong when TMACS system excited !!!!!"
